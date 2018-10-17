@@ -13,7 +13,7 @@ public class ClosestPair {
 	
 	public static void main(String[] args) {
 		Point p1 = new Point(1,0);
-		Point p2 = new Point(3,0);
+		Point p2 = new Point(3,7);
 		Point p3 = new Point(10,0);
 		Point p4 = new Point(5,8);
 		Point p5 = new Point(20,8);
@@ -23,7 +23,6 @@ public class ClosestPair {
 		Point p9 = new Point(5,25);
 		Point p10 = new Point(0,9);
 		Point p11 = new Point(-5,13);
-		Point p12 = new Point(-5,12);
 		
 		List<Point> plist = new ArrayList<Point>();
 		plist.add(p1);
@@ -37,9 +36,19 @@ public class ClosestPair {
 		plist.add(p9);
 		plist.add(p10);
 		plist.add(p11);
-		plist.add(p12);
 		
 		PointPair pair = BruteClosestPair(plist);
+		System.out.println("蛮力法求最近点对：" + pair);
+		
+		pair = EfficientClosestPair(plist);
+		System.out.println("分治法求最近点对：" + pair);
+		
+		for(int i=0;i<10;i++) {
+			Point p = new Point((int)(Math.random()*50),(int)(Math.random()*50));
+			plist.add(p);
+		}
+		
+		pair = BruteClosestPair(plist);
 		System.out.println("蛮力法求最近点对：" + pair);
 		
 		pair = EfficientClosestPair(plist);
@@ -86,18 +95,18 @@ public class ClosestPair {
 			Point m = P.get(mid-1);
 			//以m为中线选取Q中所有 |x-m|<d 的点
 			double d = minpair.getDistance();
-			List<Point> midPoint = new ArrayList<Point>();
+			List<Point> midPoints = new ArrayList<Point>();
 			for(Point p : Q) {
-				if(new PointPair(p,m).getDistance()<d) {
-					midPoint.add(p);
+				if(Math.abs(p.x - m.x)<d) {
+					midPoints.add(p);
 				}
 			}
-			for(int i=0;i<midPoint.size()-1;i++) {
-				for(int j=i+1;j<midPoint.size();i++) {
-					if(Math.abs(midPoint.get(i).y - midPoint.get(j).y) < d) {
-						if(new PointPair(midPoint.get(i), midPoint.get(j)).getDistance()< d) {
-							minpair = new PointPair(midPoint.get(i), midPoint.get(j));
-							d = minpair.getDistance();
+			for(int i=0;i<midPoints.size()-1;i++) {
+				for(int j=i+1;j<midPoints.size();j++) {
+					if(Math.abs(midPoints.get(i).y - midPoints.get(j).y) < d) {
+						if(new PointPair(midPoints.get(i), midPoints.get(j)).getDistance()< d) {
+							minpair = new PointPair(midPoints.get(i), midPoints.get(j));
+							d = minpair.getDistance();	
 						}
 					}
 				}
