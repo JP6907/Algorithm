@@ -1,5 +1,10 @@
 package DivideConquer;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import Tools.Point;
+
 public class MergeSort {
 	
 	public static void main(String[] args) {
@@ -34,5 +39,46 @@ public class MergeSort {
 			A[k++] = B[i++];
 		while(j<=high)
 			A[k++] = B[j++];
+	}
+	
+	
+	/**
+	 * 按X坐标或Y坐标 归并排序
+	 * @param list
+	 * @param low
+	 * @param high
+	 * @param flag "X" 或 "Y"
+	 */
+	public static void PointMergeSort(List<Point> list,int low,int high,String flag) {
+		if(list.size() > 1) {
+			if(flag.equals("X") || flag.equals("Y")) {
+				if(low<high) {
+				int mid = (low+high) / 2;
+					PointMergeSort(list,low,mid,flag);
+					PointMergeSort(list,mid+1,high,flag);
+					Merge(list,low,mid,high,flag);
+				}
+			}
+		}
+	}
+	private static void Merge(List<Point> list,int low,int mid,int high,String flag) {
+		List<Point> l = new ArrayList<Point>();
+		for(int i=0;i<low;i++)
+			l.add(new Point(-999,-999));
+		for(int i=low;i<=high;i++)
+			l.add(list.get(i));
+		int i=low,j=mid+1,k=low;
+		for(;i<=mid&&j<=high;k++) {
+			//按x坐标升序排列，若x坐标相同，按y坐标升序排列
+			if((flag.equals("X")&&(l.get(i).x<l.get(j).x ||(l.get(i).x==l.get(j).x&&l.get(i).y<l.get(j).y))) 
+					|| (flag.equals("Y")&&(l.get(i).y<l.get(j).y || (l.get(i).y==l.get(j).y&&l.get(i).x<l.get(j).x))))
+				list.set(k, l.get(i++));
+			else
+				list.set(k, l.get(j++));
+		}
+		while(i<=mid)
+			list.set(k++, l.get(i++));
+		while(j<=high)
+			list.set(k++, l.get(j++));
 	}
 }

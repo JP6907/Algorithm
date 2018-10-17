@@ -66,7 +66,7 @@ public class ClosestPair {
 		else {
 			//P 按X坐标升序排列
 			List<Point> P = new ArrayList<Point>();
-			MergeSort(list, 0, n-1, "X");
+			MergeSort.PointMergeSort(list, 0, n-1, "X");
 			P.addAll(list);
 			
 			int mid = (int)Math.ceil((double)n/2); //向上取整
@@ -88,7 +88,7 @@ public class ClosestPair {
 
 			//Q 按Y坐标升序排列
 			List<Point> Q = new ArrayList<Point>();
-			MergeSort(list, 0, n-1, "Y");
+			MergeSort.PointMergeSort(list, 0, n-1, "Y");
 			Q.addAll(list);
 
 			//下面合并中间区域
@@ -138,41 +138,5 @@ public class ClosestPair {
 		return pair;
 	}
 	
-	/**
-	 * 按X坐标或Y坐标 归并排序
-	 * @param list
-	 * @param low
-	 * @param high
-	 * @param flag "X" 或 "Y"
-	 */
-	static void MergeSort(List<Point> list,int low,int high,String flag) {
-		if(list.size() > 1) {
-			if(flag.equals("X") || flag.equals("Y")) {
-				if(low<high) {
-				int mid = (low+high) / 2;
-					MergeSort(list,low,mid,flag);
-					MergeSort(list,mid+1,high,flag);
-					Merge(list,low,mid,high,flag);
-				}
-			}
-		}
-	}
-	private static void Merge(List<Point> list,int low,int mid,int high,String flag) {
-		List<Point> l = new ArrayList<Point>();
-		for(int i=0;i<low;i++)
-			l.add(new Point(-999,-999));
-		for(int i=low;i<=high;i++)
-			l.add(list.get(i));
-		int i=low,j=mid+1,k=low;
-		for(;i<=mid&&j<=high;k++) {
-			if((flag.equals("X")&&(l.get(i).x<l.get(j).x)) || (flag.equals("Y")&&(l.get(i).y<l.get(j).y)))
-				list.set(k, l.get(i++));
-			else
-				list.set(k, l.get(j++));
-		}
-		while(i<=mid)
-			list.set(k++, l.get(i++));
-		while(j<=high)
-			list.set(k++, l.get(j++));
-	}
+	
 }
