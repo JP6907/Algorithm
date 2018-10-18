@@ -1,5 +1,8 @@
 package Entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * <p>Title: Graph</p>  
  * <p>Description: 无向图的邻接矩阵实现</p>  
@@ -34,14 +37,15 @@ public class Graph {
 	 * 深度优先搜索遍历无向图算法
 	 * @param G
 	 * @param v
-	 * @param visited 访问数组
+	 * @param visited
+	 * @param OrderSeq DFS遍历顺序列表
 	 */
-	public static void DFS(Graph G,int v,int[] visited) {
+	public static void DFS(Graph G,int v,int[] visited,List<Integer> OrderList) {
 		visited[v] = 1;
-		System.out.println(v);
+		OrderList.add(v);
 		for(int w = G.FirstNeighbor(G, v);w>=0;w=G.NextNeighbor(G, v, w)) {
 			if(visited[w]==0)
-				DFS(G, w, visited);
+				DFS(G, w, visited, OrderList);
 		}
 	}
 	/**
@@ -92,6 +96,9 @@ public class Graph {
 		G.addEdge(5, 6);
 		G.addEdge(5, 7);
 		int[] visited = new int[8];
-		G.DFS(G, 0, visited);
+		List<Integer> list = new ArrayList<Integer>();
+		G.DFS(G, 0, visited,list);
+		for(int i:list)
+			System.out.println(i);
 	}
 }
