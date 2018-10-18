@@ -1,15 +1,17 @@
-/**
- * 快包问题
- */
 package DivideConquer;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
+import Tools.MyComparator;
 import Tools.Point;
-
+/**
+ * 分治法求凸包问题，即快包算法
+ * QuickHull
+ * @author zjp
+ * 2018年10月18日 上午9:06:50
+ */
 public class QuickHull {
 
 	public static void main(String[] args) {
@@ -38,8 +40,6 @@ public class QuickHull {
 		plist.add(p9);
 		plist.add(p10);
 		plist.add(p11);
-	
-		Collections.sort(plist, new XComparator());
 		
 		List<Point> hullList = FindQuickHull(plist);
 		for(int i=0;i<hullList.size();i++) {
@@ -58,7 +58,7 @@ public class QuickHull {
 			hullList.addAll(list);
 			return hullList;
 		}else {
-			Collections.sort(list, new XComparator());
+			Collections.sort(list, new MyComparator.XComparator());
 			Point p1 = list.get(0);
 			Point pn = list.get(list.size()-1);
 			hullList.add(p1);
@@ -97,7 +97,7 @@ public class QuickHull {
 			hullList.addAll(list);
 			return hullList;
 		}else {
-			Collections.sort(list, new XComparator());
+			Collections.sort(list, new MyComparator.XComparator());
 			//MergeSort.PointMergeSort(list, 0, hullList.size()-1, "X");
 			//最左边和最右边的点必定是快包顶点
 			Point p1 = list.get(0);
@@ -149,7 +149,7 @@ public class QuickHull {
 			hullList.addAll(list);
 			return hullList;
 		}else {
-			Collections.sort(list, new XComparator());
+			Collections.sort(list, new MyComparator.XComparator());
 			//MergeSort.PointMergeSort(list, 0, hullList.size()-1, "X");
 			//最左边和最右边的点必定是快包顶点
 			Point p1 = list.get(0);
@@ -216,16 +216,5 @@ public class QuickHull {
 	public static double area(Point p1,Point p2,Point p3) {
 		int d = p1.x*p2.y + p3.x*p1.y + p2.x*p3.y - p3.x*p2.y - p2.x*p1.y - p1.x*p3.y;
 		return ((double)Math.abs(d))/2;
-	}
-	
-	//优先按X坐标升序排列的比较器
-	static class XComparator implements Comparator<Point>{
-		@Override
-		public int compare(Point o1, Point o2) {
-			if(o1.x == o2.x)
-				return o1.y - o2.y;
-			else
-				return o1.x - o2.x;
-		}
 	}
 }
