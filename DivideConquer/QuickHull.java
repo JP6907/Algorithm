@@ -41,13 +41,56 @@ public class QuickHull {
 	
 		Collections.sort(plist, new XComparator());
 		
-		List<Point> hullList = UpQuickHull(plist);
+		List<Point> hullList = FindQuickHull(plist);
 		for(int i=0;i<hullList.size();i++) {
 			System.out.print(hullList.get(i) + "  ");
 		}
 		System.out.println();
 	}
-	
+	/**
+	 * 求快包
+	 * @param list
+	 * @return
+	 */
+	public static List<Point> FindQuickHull(List<Point> list){
+		List<Point> hullList = new ArrayList<Point>();
+		if(list.size()<4) {
+			hullList.addAll(list);
+			return hullList;
+		}else {
+			Collections.sort(list, new XComparator());
+			Point p1 = list.get(0);
+			Point pn = list.get(list.size()-1);
+			hullList.add(p1);
+			hullList.add(pn);
+			//分别求出上包的点和下包的点
+			List<Point> upList = new ArrayList<Point>();
+			List<Point> downList = new ArrayList<Point>();
+			
+			upList.add(p1);
+			upList.add(pn);
+			downList.add(p1);
+			downList.add(pn);
+			
+			for(int i=1;i<list.size()-1;i++) {
+				if(location(p1, pn, list.get(i)).equals("LEFT")) 
+					upList.add(list.get(i));
+				else if(location(p1, pn, list.get(i)).equals("RIGHT")) 
+					downList.add(list.get(i));
+			}
+			
+			//分治
+			hullList.addAll(UpQuickHull(upList));
+			hullList.addAll(DownQuickHull(downList));
+			return hullList;
+		}
+	}
+	/**
+	 * 求上包
+	 * @param list
+	 * @return
+	 * 上包递归求直线p1pmax和pmaxpn的上包
+	 */
 	public static List<Point> UpQuickHull(List<Point> list){
 		List<Point> hullList = new ArrayList<Point>();
 		if(list.size()<4) {
@@ -82,20 +125,67 @@ public class QuickHull {
 			upList1.add(pMax);
 			upList2.add(pn);
 			upList2.add(pMax);
+			//分别求出位于直线p1pmax左边和直线pmaxpn左边的点集，递归求上包
 			for(int i=1;i<list.size()-1;i++) {
 				if(location(p1,pMax,list.get(i)).equals("LEFT"))
 					upList1.add(list.get(i));
 				else if(location(pMax,pn,list.get(i)).equals("LEFT"))
 					upList2.add(list.get(i));
 			}
-//			hullList.addAll(UpQuickHull(upList1));
-//			hullList.addAll(UpQuickHull(upList2));
-			List<Point> hull1 = UpQuickHull(upList1);
-			List<Point> hull2 = UpQuickHull(upList2);
-			for(Point p: hull1)
-				hullList.add(p);
-			for(Point p: hull2)
-				hullList.add(p);
+			hullList.addAll(UpQuickHull(upList1));
+			hullList.addAll(UpQuickHull(upList2));
+			return hullList;
+		}
+	}
+	/**
+	 * 求下包
+	 * @param list
+	 * @return
+	 * 下包递归求直线pnpmax和直线pmaxp1的下包
+	 */
+	public static List<Point> DownQuickHull(List<Point> list){
+		List<Point> hullList = new ArrayList<Point>();
+		if(list.size()<4) {
+			hullList.addAll(list);
+			return hullList;
+		}else {
+			Collections.sort(list, new XComparator());
+			//MergeSort.PointMergeSort(list, 0, hullList.size()-1, "X");
+			//最左边和最右边的点必定是快包顶点
+			Point p1 = list.get(0);
+			Point pn = list.get(list.size()-1);
+			hullList.add(p1);
+			hullList.add(pn);
+			
+			Point pMax = p1;  //下包顶点
+			//寻找上包中离直线p1pn最远的点
+			double maxArea = 0;
+			for(int i=1;i<list.size()-1;i++) {
+				double area = area(p1,pn,list.get(i));
+				if(area > maxArea) {
+					maxArea = area;
+					pMax = list.get(i);
+				}else if(area == maxArea) {//有多个相同距离顶点，选择角PmaxPnP1最大的点，即横坐标最大的点
+					if(list.get(i).x>pMax.x) {
+						pMax = list.get(i);
+					}
+				}
+			}
+			List<Point> upList1 = new ArrayList<Point>();
+			List<Point> upList2 = new ArrayList<Point>();
+			upList1.add(p1);
+			upList1.add(pMax);
+			upList2.add(pn);
+			upList2.add(pMax);
+			//分别求出位于直线pnpmax左边和直线pmaxp1左边的点集，递归求下包
+			for(int i=1;i<list.size()-1;i++) {
+				if(location(pn,pMax,list.get(i)).equals("LEFT"))
+					upList1.add(list.get(i));
+				else if(location(pMax,p1,list.get(i)).equals("LEFT"))
+					upList2.add(list.get(i));
+			}
+			hullList.addAll(DownQuickHull(upList1));
+			hullList.addAll(DownQuickHull(upList2));
 			return hullList;
 		}
 	}
