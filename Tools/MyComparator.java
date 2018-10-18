@@ -2,6 +2,8 @@ package Tools;
 
 import java.util.Comparator;
 
+import Entity.Point;
+
 /**
  * 自定义比较器
  * @author zjp

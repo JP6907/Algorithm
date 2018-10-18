@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import Entity.Point;
 import Tools.MyComparator;
-import Tools.Point;
 /**
  * 分治法求凸包问题，即快包算法
  * QuickHull

@@ -6,8 +6,8 @@ package DivideConquer;
 import java.util.ArrayList;
 import java.util.List;
 
-import Tools.Point;
-import Tools.PointPair;
+import Entity.Point;
+import Entity.PointPair;
 
 public class ClosestPair {
 	

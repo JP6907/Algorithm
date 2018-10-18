@@ -3,7 +3,7 @@ package DivideConquer;
 import java.util.ArrayList;
 import java.util.List;
 
-import Tools.Point;
+import Entity.Point;
 
 public class MergeSort {
 	

@@ -1,6 +1,10 @@
-package Tools;
-
-
+package Entity;
+/**
+ * <p>Title: PointPair</p>  
+ * <p>Description: 点对实体类</p>  
+ * @author zjp
+ * 2018年10月18日 上午9:30:11
+ */
 public class PointPair{
 	public Point p1;
 	public Point p2;
