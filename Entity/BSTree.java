@@ -2,41 +2,56 @@ package Entity;
 
 public class BSTree {
 	
-	public BSTree lchild;
-	public BSTree rchild;
+	public TreeNode root;
 	
-	public int data;
+	public BSTree(int value) {
+		root = new TreeNode(value);
+		root.lchild = null;
+		root.rchild = null;
+	}
 	
-	public static void CreateBST(BSTree T,int[] data) {
-		T = null;
-		for(int i=0;i<data.length;i++) {
-			InsertBST(T,data[i]);
+	
+	public void insert(int value) {
+		TreeNode node = new TreeNode(value);
+		if(root==null) {
+			root = node;
+			root.lchild = null;
+			root.rchild = null;
+		}else {
+			TreeNode current = root;
+			TreeNode parent = null;
+			while(true) {
+				if(value>current.value) {
+					parent = current;
+					current = current.rchild;
+					if(current==null) {
+						parent.rchild = node;
+						break;
+					}
+				}else if(value<current.value) {
+					parent = current;
+					current = current.lchild;
+					if(current==null) {
+						parent.lchild = node;
+						break;
+					}
+				}else
+					break;
+			}
 		}
 	}
 	
-	public static boolean InsertBST(BSTree T,int data) {
-		if(T == null) {
-			T = new BSTree();	
-			T.lchild = null;
-			T.rchild = null;
-			T.data = data;
-			return true;
-		}else if(data == T.data)
-			return false;
-		else if(data>T.data)
-			return InsertBST(T.rchild,data);
-		else
-			return InsertBST(T.lchild,data);
-		
-	}
-	
-	public static BSTree SearchBST(BSTree T,int data) {
-		if(T == null || data == T.data)
-			return T;
-		else if(data>T.data)
-			return SearchBST(T.lchild,data);
-		else
-			return SearchBST(T.rchild,data);
+	public TreeNode SearchBST(TreeNode node,int value) {
+		if(node!=null) {
+			System.out.println("search:"+node.value);
+			if(value == node.value)
+				return node;
+			else if(value>node.value)
+				return SearchBST(node.rchild,value);
+			else
+				return SearchBST(node.lchild,value);
+		}else
+			return null;
 	}
 	/**
 	 * 二叉查找树删除
@@ -46,50 +61,83 @@ public class BSTree {
 	 * @param T
 	 * @param data
 	 */
-	public static void DeleteBST(BSTree T,int data) {
-		if(T != null) {
-			if(data == T.data)
-				Delete(T);
-			else if(data>T.data)
-				DeleteBST(T.rchild,data);
-			else
-				DeleteBST(T.lchild,data);
-		}
-	}
-	/**
-	 * 删除指定节点
-	 * @param T
-	 */
-	private static void Delete(BSTree T) {
-		if(T!=null) {
-			if(T.lchild==null&&T.rchild==null) { //无子树
-				T = null;
-			}else if(T.lchild!=null) {
-				T = T.lchild;
-			}else if(T.rchild!=null) {
-				T = T.rchild;
+//	public static void DeleteBST(BSTree T,int data) {
+//		if(T != null) {
+//			if(data == T.data)
+//				Delete(T);
+//			else if(data>T.data)
+//				DeleteBST(T.rchild,data);
+//			else
+//				DeleteBST(T.lchild,data);
+//		}
+//	}
+//	/**
+//	 * 删除指定节点
+//	 * @param T
+//	 */
+	private static void DeleteNode(TreeNode node) {
+		if(node!=null) {
+			if(node.lchild==null&&node.rchild==null) { //无子树
+				node = null;
+			}else if(node.lchild!=null) {
+				node = node.lchild;
+			}else if(node.rchild!=null) {
+				node = node.rchild;
 			}else { //左右子树都不为空
-				BSTree leftMax = FindMax(T.lchild);  
-				T.data = leftMax.data; //用左子树的最大点代替,必定无右子树
+				TreeNode leftMax = FindMax(node.lchild);  
+				node.value = leftMax.value; //用左子树的最大点代替,必定无右子树
 				//替换之后删除左子树最大点
-				if(leftMax.lchild!=null)
-					leftMax = leftMax.lchild;
-				else
-					leftMax = null;
+				DeleteNode(leftMax);
 			}
 		}
 	}
-	/**
-	 * 寻找二叉树中的最大值
-	 * @param T
-	 * @return
-	 */
-	public static BSTree FindMax(BSTree T) {
-		if(T == null)
+//	/**
+//	 * 寻找二叉树中的最大值
+//	 * @param T
+//	 * @return
+//	 */
+	public static TreeNode FindMax(TreeNode node) {
+		if(node == null)
 			return null;
-		BSTree p = T;
-		while(p.rchild!=null)
-			p = p.rchild;
-		return p;
+		TreeNode n = node;
+		while(n.rchild!=null)
+			n = n.rchild;
+		return n;
 	}
+//	/**
+//	 * 中序遍历二叉树
+//	 * @param T
+//	 */
+	public static void InOrderTraversal(TreeNode node) {
+		if(node!=null) {
+			InOrderTraversal(node.lchild);
+			System.out.println("InOrder:" + node.value);
+			InOrderTraversal(node.rchild);
+		}
+	}
+	
+	public static void main(String[] args) {
+		int[] data = {3,1,8,2,6,7,5};
+		BSTree T = new BSTree(3);
+		//测试insert
+		for(int i=0;i<data.length;i++) {
+			T.insert(data[i]);
+		}
+		System.out.println(T.root.lchild.rchild==null);
+		System.out.println(T.root.rchild.value);
+		//测试search
+		TreeNode node = T.SearchBST(T.root, 6);
+		System.out.println(node==null?"null":node.value);
+		//测试Inorder
+		InOrderTraversal(T.root);
+		//测试寻找最大顶点
+		TreeNode maxNode = FindMax(T.root);
+		System.out.println("Max:" + maxNode.value);
+		//测试DeleteNode
+		node = new TreeNode(8);
+		T.DeleteNode(node);
+		InOrderTraversal(T.root);
+		
+	}
+	
 }
