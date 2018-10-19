@@ -1,7 +1,12 @@
 package DecreaseConquer;
 
 import Entity.Graph;
-
+/**
+ * <p>Title: ArticulationPoint</p>  
+ * <p>Description: 求图中关节点算法</p>  
+ * @author zjp
+ * 2018年10月19日 上午9:36:06
+ */
 public class ArticulationPoint {
 	
 	public static int ArcNum = 10;
