@@ -1,6 +1,7 @@
 package Tools;
 
 public class Tools {
+
 	
 	public static void printMartix(int[][] m) {
 		for(int i=0;i<m.length;i++) {

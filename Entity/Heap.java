@@ -1,27 +1,29 @@
 package Entity;
 
-/**
- * <p>Title: 最小堆 和 堆降序排序</p>  
- * 数组实现，注意是从下标1开始存放
- * <p>Description: </p>  
- * @author zjp
- * 2018年10月21日 上午11:30:16
- */
+/**  
+ * @ClassName Heap 最小堆 和 降序堆排序
+ * @Description: TODO
+ * @author ZJP
+ * @date 18-10-21 下午3:07
+ **/
 public class Heap {
 
 	public static void main(String[] args) {
 		int[] A = {0,45,2,68,-1,10,1};   //A[0]不参与排序
 		HeapSort(A, A.length-1);
 		for(int i=1;i<A.length;i++)
-			System.out.println(A[i]);
+			System.out.print(A[i] + " ");
+		System.out.println();
+
+		int[] B = {0,-1,2,1,45,10,68,0};
+		adjustUp(B,7);
+		for(int i=1;i<B.length;i++)
+			System.out.print(B[i]+" ");
+		System.out.println();
 	}
-	
-	/**
-	 * 堆排序 降序排序
-	 * @param A  1....n
-	 * @param n
-	 */
+	//降序堆排序
 	public static void HeapSort(int[] A,int n) {
+
 		BuildMinHeap(A, n);
 		for(int i=n;i>1;i--) {
 			int temp = A[i];
@@ -59,5 +61,22 @@ public class Heap {
 		}
 		A[k] = A[0];
 	}
-
+	/**
+	 * @Description: TODO
+	 * @author ZJP
+	 * @date 18-10-21 下午3:10
+	 * @Param * @param null
+	 * @return
+	 **/
+	public static void adjustUp(int[] A,int k) {
+		for(int i=k/2;i>=1;i/=2) {
+			if(A[k]<A[i]) {
+				int temp = A[k];
+				A[k] = A[i];
+				A[i] = temp;
+				k = i;
+			}else
+				break;
+		}
+	}
 }
