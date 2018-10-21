@@ -1,6 +1,4 @@
-package TransformConquer;
-
-import Tools.Tools;
+package Entity;
 
 /**
  * <p>Title: 最小堆 和 堆降序排序</p>  
