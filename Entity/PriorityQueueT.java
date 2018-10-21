@@ -51,7 +51,9 @@ public class PriorityQueueT<T extends Comparable> {
             this.data.set(this.size, temp);
             //向下调整
             this.adjustDown(this.data,1,--this.size);
-            return this.data.get(this.size+1);
+            T t = this.data.get(this.size+1);
+            this.data.remove(this.data.get(this.size+1));
+            return t;
         }
     }
 
