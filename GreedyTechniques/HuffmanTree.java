@@ -23,12 +23,16 @@ public class HuffmanTree {
         HuffmanNode huddmanTree = HuffmanNodeBuildHuffmanTree(list);
         System.out.println(huddmanTree.chance);
         System.out.println(huddmanTree.lchild.chance);
-        System.out.println(huddmanTree.lchild.lchild.chance);
-        System.out.println(huddmanTree.lchild.rchild.chance);
+        System.out.println(huddmanTree.lchild.lchild.character + ":" + huddmanTree.lchild.lchild.chance);
+        System.out.println(huddmanTree.lchild.rchild.character + ":" + huddmanTree.lchild.rchild.chance);
         System.out.println(huddmanTree.rchild.lchild.chance);
         System.out.println(huddmanTree.rchild.chance);
         System.out.println(huddmanTree.rchild.lchild.chance);
-        System.out.println(huddmanTree.rchild.rchild.chance);
+        System.out.println(huddmanTree.rchild.rchild.character + ":" + huddmanTree.rchild.rchild.chance);
+
+        System.out.println();
+        int[] code = new int[10];
+        GetHuffmanCode(huddmanTree,code,-1);
     }
 
     public static HuffmanNode HuffmanNodeBuildHuffmanTree(List<HuffmanNode> nodeList){
@@ -43,9 +47,30 @@ public class HuffmanTree {
             HuffmanNode nodeNew = new HuffmanNode(node1.character+node2.character, node1.chance+node2.chance);
             nodeNew.lchild = node1;
             nodeNew.rchild = node2;
+            node1.parent = nodeNew;
+            node2.parent = nodeNew;
             pQueue.enQueue(nodeNew);
             size = pQueue.getSize();
         }
         return pQueue.deQueue();
+    }
+
+    public static void GetHuffmanCode(HuffmanNode huffmanTree,int[] code,int index){
+        if(huffmanTree.parent!=null){
+            if(huffmanTree.equals(huffmanTree.parent.lchild))
+                code[index] = 0;
+            else if(huffmanTree.equals(huffmanTree.parent.rchild))
+                code[index] = 1;
+        }
+        if(huffmanTree.lchild!=null&&huffmanTree.rchild!=null){
+            GetHuffmanCode(huffmanTree.lchild,code,index+1);
+            GetHuffmanCode(huffmanTree.rchild,code,index+1);
+        } else{
+            System.out.print(huffmanTree.character + ":");
+            for(int i=0;i<=index;i++){
+                System.out.print(code[i]);
+            }
+            System.out.println(" " + huffmanTree.chance);
+        }
     }
 }

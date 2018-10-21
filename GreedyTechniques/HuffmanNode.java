@@ -7,12 +7,14 @@ public class HuffmanNode implements Comparable<HuffmanNode> {
     public String character;  //字符
     public float chance;   //概率
 
+    public HuffmanNode parent;
     public HuffmanNode lchild;
     public HuffmanNode rchild;
 
     public HuffmanNode(String character,float chance){
         this.character = character;
         this.chance = chance;
+        parent = null;
         lchild = null;
         rchild = null;
     }
