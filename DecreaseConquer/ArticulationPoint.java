@@ -22,19 +22,19 @@ public class ArticulationPoint {
 			pred[i] = -1;
 		
 		Graph G = new Graph(10);
-		G.addEdge(0, 1);
-		G.addEdge(1, 2);
-		G.addEdge(2, 3);
-		G.addEdge(0, 4);
-		G.addEdge(0, 5);
-		G.addEdge(1, 5);
-		G.addEdge(2, 5);
-		G.addEdge(2, 6);
-		G.addEdge(3, 7);
-		G.addEdge(4, 8);
-		G.addEdge(4, 9);
-		G.addEdge(8, 9);
-		G.addEdge(6, 7);
+		G.addEdge(0, 1,1);
+		G.addEdge(1, 2,1);
+		G.addEdge(2, 3,1);
+		G.addEdge(0, 4,1);
+		G.addEdge(0, 5,1);
+		G.addEdge(1, 5,1);
+		G.addEdge(2, 5,1);
+		G.addEdge(2, 6,1);
+		G.addEdge(3, 7,1);
+		G.addEdge(4, 8,1);
+		G.addEdge(4, 9,1);
+		G.addEdge(8, 9,1);
+		G.addEdge(6, 7,1);
 
 		ArtPointDFS(G,0);
 	}

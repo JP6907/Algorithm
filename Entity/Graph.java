@@ -22,15 +22,15 @@ public class Graph {
 		Vex = new char[vertexNum];
 		Edge = new int[vertexNum][vertexNum];
 		
-		for(int i=0;i<this.vertexNum;i++) {
-			Edge[i][i] = 1;
-		}
+//		for(int i=0;i<this.vertexNum;i++) {
+//			Edge[i][i] = 1;
+//		}
 	}
 	
-	public void addEdge(int i,int j) {
+	public void addEdge(int i,int j,int weight) {
 		if(i>=0&&i<this.vertexNum && j>=0&&j<this.vertexNum) {
-			Edge[i][j] = 1;
-			Edge[j][i] = 1;
+			Edge[i][j] = weight;
+			Edge[j][i] = weight;
 		}
 	}
 	/**
@@ -88,13 +88,13 @@ public class Graph {
 	
 	public static void main(String[] args) {
 		Graph G = new Graph(8);
-		G.addEdge(0, 1);
-		G.addEdge(0, 2);
-		G.addEdge(1, 3);
-		G.addEdge(1, 4);
-		G.addEdge(1, 5);
-		G.addEdge(5, 6);
-		G.addEdge(5, 7);
+		G.addEdge(0, 1,1);
+		G.addEdge(0, 2,1);
+		G.addEdge(1, 3,1);
+		G.addEdge(1, 4,1);
+		G.addEdge(1, 5,1);
+		G.addEdge(5, 6,1);
+		G.addEdge(5, 7,1);
 		int[] visited = new int[8];
 		List<Integer> list = new ArrayList<Integer>();
 		G.DFS(G, 0, visited,list);
