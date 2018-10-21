@@ -13,13 +13,13 @@ public class Graph {
 	
 	public int vertexNum = 10; //默认
 	
-	public int[] Vex;
+	public char[] Vex;
 	public int[][] Edge;
 	
 	public Graph(int vertexNum) {
 		super();
 		this.vertexNum = vertexNum;
-		Vex = new int[vertexNum];
+		Vex = new char[vertexNum];
 		Edge = new int[vertexNum][vertexNum];
 		
 		for(int i=0;i<this.vertexNum;i++) {
