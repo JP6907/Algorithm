@@ -53,6 +53,8 @@ public class MaxFlow {
     }
 
     public static int ShortestAugmentingPath(GraphD G){
+        int maxFlow = 0;
+
         Queue<Integer> queue = new LinkedList<Integer>();
         queue.offer(0);
 
@@ -85,15 +87,20 @@ public class MaxFlow {
             }
             //如果是汇点，从汇点开始方向移动增益
             if(G.FirstNeighbor(G,i)==-1){
+                maxFlow +=  Flag[i][0]; //增加流量
+                System.out.println("当前增益路径增加流量：" + Flag[i][0]);
+
                 int j=i;
                 i = Flag[j][1];
                 while(j!=0){ //未到达源点
                     if(i>=0){ //标记是i+
                         X[i][j] +=Flag[j][0];
                         j = i;
+                        i = Flag[j][1];
                     }else{ //标记是i-
                         X[j][-i] -=Flag[j][0];
                         j = -i;
+                        i = Flag[j][1];
                     }
                 }
                 //回到源点之后，除源点擦去所有标记，用源点对队列重新初始化
@@ -106,8 +113,9 @@ public class MaxFlow {
                 queue.offer(0);
             }
         }
-        System.out.println(Flag[G.vertexNum-1][0]);
-        return Flag[G.vertexNum-1][0];
+        System.out.println("最大流量:" + maxFlow);
+
+        return maxFlow;
     }
 
 }
