@@ -10,6 +10,7 @@ import java.util.Queue;
 /**
  * @ClassName  最大网络流问题
  * @Description: TODO 使用增益路径法求最大网络流
+ * 算法书 P283
  * @author ZJP
  * @date 18-10-22 下午3:45
  **/
@@ -93,6 +94,7 @@ public class MaxFlow {
                 int j=i;
                 i = Flag[j][1];
                 while(j!=0){ //未到达源点
+                    System.out.print(j);
                     if(i>=0){ //标记是i+
                         X[i][j] +=Flag[j][0];
                         j = i;
@@ -103,6 +105,7 @@ public class MaxFlow {
                         i = Flag[j][1];
                     }
                 }
+                System.out.println();
                 //回到源点之后，除源点擦去所有标记，用源点对队列重新初始化
                 for(int k=1;k<G.vertexNum;k++){
                     Flag[k][0] = 0;
