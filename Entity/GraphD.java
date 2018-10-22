@@ -85,13 +85,50 @@ public class GraphD {
 		else
 			return -1;
 	}
+	/**
+	 * 求图中定点v的第一个  反向  连接点
+	 * @param G 有向图
+	 * @param v
+	 * @return
+	 */
+	public static int FirstBackNeighbor(GraphD G, int v) {
+		if(v<0||v>=G.vertexNum)
+			return -1;
+
+		int i=0;
+		while(i<G.vertexNum&&G.Edge[i][v]==0)
+			i++;
+		if(i!=G.vertexNum)
+			return i;
+		else
+			return -1;
+	}
+	/**
+	 * 求图中顶点v在顶点w之后的下一个  反向  邻接点
+	 * @param G
+	 * @param v
+	 * @param w
+	 * @return
+	 */
+	public static int NextBackNeighbor(GraphD G, int v, int w) {
+		if(v<0||v>=G.vertexNum || w<0||w>=G.vertexNum)
+			return -1;
+
+		int i=w+1;
+		while(i<G.vertexNum&&G.Edge[i][v]==0)
+			i++;
+		if(i!=G.vertexNum)
+			return i;
+		else
+			return -1;
+	}
 	
 	public static void main(String[] args) {
 		GraphD G = new GraphD(6);
 		G.addEdge(0, 1,2);
 		G.addEdge(0, 3,3);
 		G.addEdge(1, 4,3);
-		G.addEdge(1, 2,5);
+		G.addEdge(2, 1,5);
 		G.addEdge(3, 2,1);
 		G.addEdge(4, 5,4);
 		G.addEdge(2, 5,2);
@@ -101,5 +138,8 @@ public class GraphD {
 		G.DFS(G, 0, visited,list);
 		for(int i:list)
 			System.out.println(i);
+
+		System.out.println(GraphD.FirstBackNeighbor(G,2));
+		System.out.println(GraphD.NextBackNeighbor(G,2,3));
 	}
 }

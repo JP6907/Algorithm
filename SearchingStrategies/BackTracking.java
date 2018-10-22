@@ -1,6 +1,8 @@
 package SearchingStrategies;
 
-/**  
+import Tools.MyComparator;
+
+/**
  * @ClassName BackTracking 回溯法求n皇后问题
  * @Description: TODO
  * @author ZJP
@@ -47,4 +49,16 @@ public class BackTracking {
             }
         }
     }
+
+    //通用模板
+//    Bakctrack(X[1...i]){
+//        if(X[1...i]是一个解)
+//            wirteX[1....i]
+//        else{
+//            for(和X[1...i]及约束相容的每一个元素xi+1){
+//                Xi+1 -> X[1....i+1]
+//                Bakctrack(X[1....i+1])
+//            }
+//        }
+//    }
 }

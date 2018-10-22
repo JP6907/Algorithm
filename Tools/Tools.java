@@ -27,5 +27,10 @@ public class Tools {
 			System.out.println();
 		}
 	}
+
+
+	public static int min(int i,int j){
+		return (i<j)?i:j;
+	}
 	
 }
