@@ -21,6 +21,14 @@ public class Knapsack {
 	
 	public static void main(String[] args) {
 		System.out.println("记忆化-------");
+		for(int i=0;i<F.length;i++) {
+			for(int j=0;j<F[0].length;j++) {
+				if(i==0||j==0)
+					F[i][j] = 0;
+				else
+					F[i][j] = -1;
+			}
+		}
 		int maxValue = MFKnapsack(n,MaxWeight);
 		for(int i=0;i<F.length;i++) {
 			for(int j=0;j<F[0].length;j++) {
@@ -60,7 +68,7 @@ public class Knapsack {
 	 * 背包问题实现记忆功能
 	 * @param i 前i个物品
 	 * @param j 承重量
-	 * @param 全局变量weight[1...n]、value[1...n]、F[0...n][0...W]
+	 * 全局变量weight[1...n]、value[1...n]、F[0...n][0...W]
 	 * F[0...n][0...W]除了行0和列0用0初始化以外，F的所有单元格用-1初始化
 	 * @return 最大总价值
 	 */
