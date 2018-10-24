@@ -10,7 +10,7 @@ public class BoyerMoore {
 		for(int i=0;i<p.length();i++)
 			System.out.print(badTc[p.charAt(i)] + " ");
 		System.out.println();
-		
+
 
 	}
 	
