@@ -1,6 +1,5 @@
 package SearchingStrategies;
 
-import Tools.MyComparator;
 
 /**
  * @ClassName BackTracking 回溯法求n皇后问题
