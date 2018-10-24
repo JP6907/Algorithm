@@ -11,6 +11,10 @@ public class AVLTree<T extends Comparable<T>> {
 
     private AVLNode<T> root;
 
+    public AVLNode<T> getRoot(){
+        return root;
+    }
+
     public class AVLNode<T extends Comparable<T>>{
 
         T key;
@@ -119,6 +123,118 @@ public class AVLTree<T extends Comparable<T>> {
         InOrderTraversal(this.root);
     }
 
+    private AVLNode<T> maxNode(AVLNode<T> tree){
+        if(tree!=null){
+                AVLNode<T> lmaxNode = maxNode(tree.lchild);
+                AVLNode<T> rmaxNode = maxNode(tree.rchild);
+                if(lmaxNode!=null&&rmaxNode!=null){
+                    AVLNode<T> maxchild = (lmaxNode.key.compareTo(rmaxNode.key)>0)?lmaxNode:rmaxNode;
+                    return (tree.key.compareTo(maxchild.key)>0)?tree:maxchild;
+                }else if(lmaxNode!=null){
+                    return (tree.key.compareTo(lmaxNode.key)>0?tree:lmaxNode);
+                }else if(rmaxNode!=null){
+                    return (tree.key.compareTo(rmaxNode.key)>0?tree:rmaxNode);
+                }else{
+                    return tree;
+                }
+        }else{
+            return null;
+        }
+    }
+
+    public T Maximum(){
+        AVLNode<T> maxNode = maxNode(this.root);
+        if(maxNode!=null)
+            return maxNode.key;
+        else
+            return null;
+    }
+
+    private AVLNode<T> minNode(AVLNode<T> tree){
+        if(tree!=null){
+            AVLNode<T> lminNode = minNode(tree.lchild);
+            AVLNode<T> rminNode = minNode(tree.rchild);
+            if(lminNode!=null&&rminNode!=null){
+                AVLNode<T> minchild = (lminNode.key.compareTo(rminNode.key)<0)?lminNode:rminNode;
+                return (tree.key.compareTo(minchild.key)<0)?tree:minchild;
+            }else if(lminNode!=null){
+                return (tree.key.compareTo(lminNode.key)<0?tree:lminNode);
+            }else if(rminNode!=null){
+                return (tree.key.compareTo(rminNode.key)<0?tree:rminNode);
+            }else{
+                return tree;
+            }
+        }else{
+            return null;
+        }
+    }
+
+    public T Minmum(){
+        AVLNode<T> minNode = minNode(this.root);
+        if(minNode!=null)
+            return minNode.key;
+        else
+            return null;
+    }
+
+    private AVLNode<T> remove(AVLNode<T> node,AVLNode<T> deleteNode){
+        if(node==null|| deleteNode==null)
+            return null;
+        else{
+            int cmp = deleteNode.key.compareTo(node.key);
+            if(cmp<0){  //待删除的点在左子树中
+                node.lchild = remove(node.lchild,deleteNode);
+                if(height(node.rchild) - height(node.lchild) == 2){ //删除后引起不平衡
+                    if(height(node.rchild.rchild) > height(node.rchild.lchild)){
+                        node = RightRightRotation(node);
+                    }else
+                        node = RightLeftRotation(node);
+                }
+            }else if(cmp>0){  //待删除的点在右子树中
+                node.rchild = remove(node.rchild,deleteNode);
+                if(height(node.lchild) - height(node.rchild) == 2){
+                    if(height(node.lchild.lchild) > height(node.lchild.rchild)){
+                        node = LeftLeftRotation(node);
+                    }else{
+                        node = LeftRightRotation(node);
+                    }
+                }
+            }else{ //根节点为要删除的节点
+                if(node.lchild!=null&&node.rchild!=null){
+                    if(height(node.lchild)>height(node.rchild)){//左子树比较高，用左子树的最大值代替删除节点
+                        AVLNode<T> lmaxnode = maxNode(node.lchild);
+                        node.key = lmaxnode.key;
+                        node.lchild = remove(node.lchild,lmaxnode);
+                    }else{ //用右子树的最小值代替删除节点
+                        AVLNode<T> rminnode = minNode(node.rchild);
+                        node.key = rminnode.key;
+                        node.rchild = remove(node.rchild,rminnode);
+                    }
+                }else {
+                    node = node.lchild!=null?node.lchild:node.rchild;
+                }
+            }
+        }
+        return node;
+    }
+
+    public void remove(T key){
+        AVLNode<T> node = search(this.root,key);
+        if(node!=null)
+            remove(this.root,node);
+    }
+
+    private AVLNode<T> search(AVLNode<T> node,T key){
+        if(node!=null){
+            if(node.key.compareTo(key)==0)
+                return node;
+            else if(node.key.compareTo(key)>0)
+                return search(node.lchild,key);
+            else
+                return search(node.rchild,key);
+        }else
+            return null;
+    }
 
     public static void main(String[] args){
         int[] data = {5,6,8,3,2,4,7};
@@ -127,6 +243,12 @@ public class AVLTree<T extends Comparable<T>> {
             tree.Insert(data[i]);
         }
         tree.InOrderTraversal();
+        System.out.println("max:" + tree.Maximum());
+        System.out.println("min:" + tree.Minmum());
+
+        tree.remove(5);
+        tree.InOrderTraversal();
+        System.out.println(tree.getRoot().key);
     }
 
 }
