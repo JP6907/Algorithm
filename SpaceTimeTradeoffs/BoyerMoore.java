@@ -5,7 +5,12 @@ public class BoyerMoore {
 	private static final int ASCII_SIZE = 126;
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		String p = "BAOBAB";
+		int[] badTc = badTc(p.toCharArray());
+		for(int i=0;i<p.length();i++)
+			System.out.print(badTc[p.charAt(i)] + " ");
+		System.out.println();
+
 
 	}
 	
@@ -26,5 +31,17 @@ public class BoyerMoore {
 			t[p[i]] = len - i -1;
 		return t;
 	}
+	/**
+	 * 求坏移动表
+	 * k 已经匹配的个数
+	 */
+	public static int badMove(int t,int k){
+		return max(t-k,1);
+	}
+
+	private static int max(int a,int b){
+		return a>b?a:b;
+	}
+
 
 }

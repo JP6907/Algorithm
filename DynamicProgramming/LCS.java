@@ -38,12 +38,12 @@ public class LCS {
 					System.out.println("(" + i + "," + j + ")" + ":" + str1.charAt(i-1));
 				}else {
 					//比较左边和上边
-					if(len[i-1][j]>=len[i][j-1]) {//左边大 
+					if(len[i-1][j]>=len[i][j-1]) {//上边大
 						len[i][j] = len[i-1][j];
-						flag[i][j] = "left   ";
+						flag[i][j] = "up     ";
 					}else {
 						len[i][j] = len[i][j-1];
-						flag[i][j] = "up     ";
+						flag[i][j] = "left   ";
 					}
 				}
 			}
