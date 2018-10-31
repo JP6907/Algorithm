@@ -98,17 +98,24 @@ public class BSTree<T extends Comparable<T>> {
 //	 * @return
 //	 */
 	private TreeNode<T> maxNode(TreeNode<T> node){
+//		if(node!=null){
+//			TreeNode<T> lmaxnode = maxNode(node.lchild);
+//			TreeNode<T> rmaxnode = maxNode(node.rchild);
+//			if(lmaxnode!=null&&rmaxnode!=null){
+//				TreeNode<T> maxchild = (lmaxnode.key.compareTo(rmaxnode.key)>0)?lmaxnode:rmaxnode;
+//				return (node.key.compareTo(maxchild.key)>0)?node:maxchild;
+//			}else if(lmaxnode!=null){
+//				return (node.key.compareTo(lmaxnode.key)>0)?node:lmaxnode;
+//			}else if(rmaxnode!=null){
+//				return (node.key.compareTo(rmaxnode.key)>0)?node:rmaxnode;
+//			}else
+//				return node;
+//		}else
+//			return null;
 		if(node!=null){
-			TreeNode<T> lmaxnode = maxNode(node.lchild);
-			TreeNode<T> rmaxnode = maxNode(node.rchild);
-			if(lmaxnode!=null&&rmaxnode!=null){
-				TreeNode<T> maxchild = (lmaxnode.key.compareTo(rmaxnode.key)>0)?lmaxnode:rmaxnode;
-				return (node.key.compareTo(maxchild.key)>0)?node:maxchild;
-			}else if(lmaxnode!=null){
-				return (node.key.compareTo(lmaxnode.key)>0)?node:lmaxnode;
-			}else if(rmaxnode!=null){
-				return (node.key.compareTo(rmaxnode.key)>0)?node:rmaxnode;
-			}else
+			if(node.rchild!=null)
+				return maxNode(node.rchild);
+			else
 				return node;
 		}else
 			return null;
@@ -140,7 +147,7 @@ public class BSTree<T extends Comparable<T>> {
 		System.out.println();
 		tree.remove(6);
 		tree.InOrderTraversal();
-		
+		System.out.println(tree.maxNode(tree.root));
 	}
 	
 }

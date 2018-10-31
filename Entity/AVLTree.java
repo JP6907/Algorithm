@@ -124,22 +124,29 @@ public class AVLTree<T extends Comparable<T>> {
     }
 
     private AVLNode<T> maxNode(AVLNode<T> tree){
+//        if(tree!=null){
+//                AVLNode<T> lmaxNode = maxNode(tree.lchild);
+//                AVLNode<T> rmaxNode = maxNode(tree.rchild);
+//                if(lmaxNode!=null&&rmaxNode!=null){
+//                    AVLNode<T> maxchild = (lmaxNode.key.compareTo(rmaxNode.key)>0)?lmaxNode:rmaxNode;
+//                    return (tree.key.compareTo(maxchild.key)>0)?tree:maxchild;
+//                }else if(lmaxNode!=null){
+//                    return (tree.key.compareTo(lmaxNode.key)>0?tree:lmaxNode);
+//                }else if(rmaxNode!=null){
+//                    return (tree.key.compareTo(rmaxNode.key)>0?tree:rmaxNode);
+//                }else{
+//                    return tree;
+//                }
+//        }else{
+//            return null;
+//        }
         if(tree!=null){
-                AVLNode<T> lmaxNode = maxNode(tree.lchild);
-                AVLNode<T> rmaxNode = maxNode(tree.rchild);
-                if(lmaxNode!=null&&rmaxNode!=null){
-                    AVLNode<T> maxchild = (lmaxNode.key.compareTo(rmaxNode.key)>0)?lmaxNode:rmaxNode;
-                    return (tree.key.compareTo(maxchild.key)>0)?tree:maxchild;
-                }else if(lmaxNode!=null){
-                    return (tree.key.compareTo(lmaxNode.key)>0?tree:lmaxNode);
-                }else if(rmaxNode!=null){
-                    return (tree.key.compareTo(rmaxNode.key)>0?tree:rmaxNode);
-                }else{
-                    return tree;
-                }
-        }else{
+            if(tree.rchild!=null)
+                return maxNode(tree.rchild);
+            else
+                return tree;
+        }else
             return null;
-        }
     }
 
     public T Maximum(){
@@ -151,22 +158,29 @@ public class AVLTree<T extends Comparable<T>> {
     }
 
     private AVLNode<T> minNode(AVLNode<T> tree){
+//        if(tree!=null){
+//            AVLNode<T> lminNode = minNode(tree.lchild);
+//            AVLNode<T> rminNode = minNode(tree.rchild);
+//            if(lminNode!=null&&rminNode!=null){
+//                AVLNode<T> minchild = (lminNode.key.compareTo(rminNode.key)<0)?lminNode:rminNode;
+//                return (tree.key.compareTo(minchild.key)<0)?tree:minchild;
+//            }else if(lminNode!=null){
+//                return (tree.key.compareTo(lminNode.key)<0?tree:lminNode);
+//            }else if(rminNode!=null){
+//                return (tree.key.compareTo(rminNode.key)<0?tree:rminNode);
+//            }else{
+//                return tree;
+//            }
+//        }else{
+//            return null;
+//        }
         if(tree!=null){
-            AVLNode<T> lminNode = minNode(tree.lchild);
-            AVLNode<T> rminNode = minNode(tree.rchild);
-            if(lminNode!=null&&rminNode!=null){
-                AVLNode<T> minchild = (lminNode.key.compareTo(rminNode.key)<0)?lminNode:rminNode;
-                return (tree.key.compareTo(minchild.key)<0)?tree:minchild;
-            }else if(lminNode!=null){
-                return (tree.key.compareTo(lminNode.key)<0?tree:lminNode);
-            }else if(rminNode!=null){
-                return (tree.key.compareTo(rminNode.key)<0?tree:rminNode);
-            }else{
+            if(tree.lchild!=null)
+                return minNode(tree.lchild);
+            else
                 return tree;
-            }
-        }else{
+        }else
             return null;
-        }
     }
 
     public T Minmum(){
